@@ -17,7 +17,7 @@
     
 
     Class.forName("com.mysql.jdbc.Driver");
-    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar", "juneh","2633");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar_fb", "juneh","2633");
     
     String sqlFindDate = "SELECT schedule_date FROM schedule WHERE schedule_uid = ? ";
     PreparedStatement queryFindDate = connect.prepareStatement(sqlFindDate);

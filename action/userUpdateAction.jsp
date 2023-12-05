@@ -54,7 +54,7 @@
     Class.forName("com.mysql.jdbc.Driver");
     Date currentDate = new Date();
     Timestamp currentTimestamp = new Timestamp(currentDate.getTime());
-    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar", "juneh","2633");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar_fb", "juneh","2633");
     String sql = "UPDATE user SET password = ?, phonenumber = ?, name = ?, grade = ?, team = ? WHERE id = ? ";
     PreparedStatement query = connect.prepareStatement(sql);
     query.setString(1, passwordValue);

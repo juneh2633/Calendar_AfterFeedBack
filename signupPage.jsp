@@ -43,15 +43,15 @@
                     <div class="inputBox">
                         <span class="inputBoxText">직급</span>
                         <div class="radioText">팀장</div>
-                        <input name="gradeValue" type='radio' value="leader">
+                        <input name="gradeValue" type='radio' value="0">
                         <div class="radioText">팀원</div>
-                        <input name="gradeValue" type='radio' value="member" checked>
+                        <input name="gradeValue" type='radio' value="1" checked>
                     </div>
                     <div class="inputBox">
                         <span class="inputBoxText">부서</span>
                         <select class="selectBox" name="teamValue">
-                            <option value="develope">개발팀</option>
-                            <option value="design">디자인팀</option>
+                            <option value="0">개발팀</option>
+                            <option value="1">디자인팀</option>
                         </select>
                     </div>
                     <div class="signupButtonBox">
@@ -64,6 +64,5 @@
     </main>
 
      <script src="JavaScript/checkException.js"></script>
-     <script src="JavaScript/doubleCheck.js"></script>
 </body>
 </html>

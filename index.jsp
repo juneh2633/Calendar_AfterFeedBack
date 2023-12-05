@@ -10,15 +10,9 @@
     String id = (String)session.getAttribute("id");
     String name = (String)session.getAttribute("name");
     if(id != null){
-%>
-<script>
-    alert("이미 로그인 되어있습니다");
-    location.href = "mainPage.jsp?idValue=" + '<%=id%>' + "&nameValue=" + '<%=name%>';
-</script>
-<%
+        response.sendRedirect("mainPage.jsp?idValue="+id+"&nameValue="+name);
         return;
     } 
-
 %>
 <!DOCTYPE html>
 <html lang="kr">

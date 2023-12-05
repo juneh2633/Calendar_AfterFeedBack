@@ -10,7 +10,7 @@
     request.setCharacterEncoding("utf-8");
     String idValue = request.getParameter("idValue");
     Class.forName("com.mysql.jdbc.Driver");
-    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar", "juneh","2633");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar_fb", "juneh","2633");
     String sql = "SELECT * FROM user where id= ?";
     PreparedStatement query = connect.prepareStatement(sql);
     query.setString(1, idValue);
