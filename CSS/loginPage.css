@@ -1,0 +1,64 @@
+.loginBox {
+    position: absolute;
+    top:50%;
+    left:50%; 
+    transform: translate(-50%, -50%);    
+    display: flex;
+    width: 900px;
+    height: 506px;
+    flex-direction: column;
+    background-color: var(--color-gray);
+    border: 2px solid var(--color-solid);
+}
+.loginHeader { 
+    display: flex;
+    height: 27%;
+    justify-content: center;
+}
+.loginHeader h2 { 
+    width: 192px;
+    height: 79px;
+    background-color: var(--color-input);
+    color:white;
+    text-align: center;
+    font-size: 36px;
+    line-height: 79px;
+    border: 2px solid var(--color-solid);
+    margin-top: 60px;
+}
+.loginMain {
+    display: flex;
+    height: 35%;
+    flex-direction: column;
+    margin-top: 40px;
+}
+.loginFooter {
+    display: flex;
+    height:30%;
+    flex-direction: row; 
+    padding-left: 230px;
+}
+.loginMain .inputBox{
+    padding-bottom: 40px;
+    padding-left: 230px;
+}
+.loginPageTextArea{
+    width: 190px;
+    height: fit-content;
+    font-size: 18px;
+}
+.loginButton {
+    display: inline;
+    width: 101px;
+    height: 54px;
+    border: 2px solid var(--color-solid);
+    background-color: var(--color-input);
+    color: white;
+    text-align: center;
+    line-height: 54px;
+    font-size: 16px;
+    margin-left: 120px;
+}
+.loginButton:active{
+    background-color: var(--color-button-active);
+}

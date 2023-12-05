@@ -1,0 +1,88 @@
+.signupBox {
+    position: absolute;
+    top:50%;
+    left:50%;    
+    transform: translate(-50%, -50%);
+    display: flex;
+    width: 987px;
+    height: 579px;
+    flex-direction: column;
+    border: 2px solid var(--color-solid);
+    background-color: var(--color-gray);
+}
+.signupHeader {
+    display: flex;
+    height: 20%;
+    justify-content: center;
+    margin-right: 180px;
+}
+.signupHeader h2{
+    font-size: 40px;
+    font-weight: 400;
+}
+.signupMain {
+    display: flex;
+    height: 40%;
+    flex-direction: row;
+}
+.signupMain .inputBox {
+    height: 35px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+.signupMain .inputBox .inputBoxText{
+    width: 96px;
+    height: 35px;
+    font-size: 18px;
+    line-height: 35px;
+}
+.signupMain .inputBox .inputBoxInput {
+    width: 241px;
+    height: 33px;
+    line-height: 35px;
+}
+.signupMainLeft {
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    margin-left: 30px;
+}
+.signupMainRight {
+    display: flex;
+    width: 400px;
+    flex-direction: column;   
+    margin-right: 40px; 
+}
+.doubleCheckButton {
+    width: 81px;
+    height: 35px;
+    background-color: rgb(119, 141, 179);
+    color:white;
+    border: 2px solid var(--color-solid);
+    font-size: 11px;
+    margin-top: 2px;
+    margin-left: 4px;
+}
+.doubleCheckButton:active {
+    background-color: rgb(95, 113, 144);
+}
+.signupButtonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-top: 120px;
+    margin-right: 14px;
+}
+.signupButton {
+    width: 96px;
+    height: 35px; 
+    background-color: var(--color-input);
+    color: white;
+    border: 2px solid var(--color-solid);
+    font-size: 10px;
+    line-height: 25px;    
+    margin-left: 37px;
+}
+.signupButton:active {
+    background-color: var(--color-button-active);
+}

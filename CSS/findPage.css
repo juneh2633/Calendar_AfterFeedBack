@@ -1,0 +1,67 @@
+.findBox {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);     
+    display: flex;
+    width: 900px;
+    height: 506px;
+    background-color: var(--color-gray);
+    border: 2px solid var(--color-solid);
+    flex-direction: column;
+}
+.findHeader {
+    display: flex;
+    height: 30%;
+    justify-content: center;
+    margin-right: 180px;
+    margin-top: 20px;
+}
+.findHeader h2 {
+    font-size: 40px;
+    font-weight: 400;
+}
+.findMain {
+    display: flex;
+    height: 40%;
+    flex-direction: column;
+}
+.findFooter {
+    display: flex;
+    height:30%;
+    flex-direction: row;
+    justify-content: end;
+    padding-right: 240px;
+}
+.findMain .inputBox{
+    padding-bottom: 40px;
+    padding-left: 250px;
+}
+.findPasswordMain {
+    display: flex;
+    height: 60%;
+    flex-direction: column;  
+}
+.findPasswordMain .inputBox {
+    padding-bottom: 40px;
+    padding-left: 250px;
+}
+.findButton {
+    display: inline;
+    width: 101px;
+    height: 35px;
+    background-color: var(--color-input);
+    color: white;    
+    border: 2px solid var(--color-solid);
+    text-align: center;
+    line-height: 35px;
+    font-size: 16px;
+    margin-left: 30px;
+}
+.findPageTextArea{
+    width: 190px;
+    height: fit-content;
+}
+.findButton:active{
+    background-color: var(--color-button-active);
+}
