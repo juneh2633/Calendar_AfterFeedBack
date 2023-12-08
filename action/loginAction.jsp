@@ -25,7 +25,7 @@
         int currentMonth = today.getMonthValue();
         int currentYear = today.getYear();
         
-        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar", "juneh","2633");
+        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar_fb", "juneh","2633");
         String sql = "SELECT * FROM user WHERE id = ? ";
         PreparedStatement query = connect.prepareStatement(sql);
         query.setString(1, idValue);
@@ -36,18 +36,17 @@
             session.setAttribute("id", result.getString(1));
             session.setAttribute("phonenumber", result.getString(3));
             session.setAttribute("name", result.getString(4));
-            session.setAttribute("grade", result.getString(5));
-            session.setAttribute("team", result.getString(6));
+            session.setAttribute("grade", result.getInt(5));
+            session.setAttribute("team", result.getInt(6));
+            session.setAttribute("pageMonth", currentMonth);
+            session.setAttribute("pageYear", currentYear);
+            session.setAttribute("pageId", result.getString(1));
         }
         if(!loginCheck){
             out.println("<script>alert('아이디 또는 비밀번호가 잘못되었습니다.'); history.back();</script>");
             return;
         }
-        String nameValue = result.getString(4);
 
-
-        
-        
     } catch (Exception e) {
         e.printStackTrace();
         response.sendRedirect("../loginPage.jsp");
@@ -69,6 +68,6 @@
     <script>
         alert("환영합니다.")
 
-        location.href = "../mainPage.jsp?idValue="+'<%=idValue%>'+"&nameValue="+'<%=nameValue%>';
+        location.href = "../mainPage.jsp";
     </script>
 </body>

@@ -20,35 +20,35 @@
     phonenumberValue = phonenumberValue.replaceAll("\\s", "");
     nameValue = nameValue.replaceAll("\\s", "");
     if(idValue.length() <= 5){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;    
     }
     if(idValue.length()>30){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;      
     }
     if(passwordValue.length()<=5){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     if(passwordValue.length()>30){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     if (!passwordValue.equals(passwordCheckValue)) {        
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     if(phonenumberValue.length()!=11){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     if(nameValue.length()==0){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     if(nameValue.length()>30){
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     Class.forName("com.mysql.jdbc.Driver");
@@ -67,7 +67,7 @@
         query.executeUpdate();
     } catch (Exception e) {
         e.printStackTrace();
-        out.println("<script>alert('오류'); history.back();</script>");
+        response.sendRedirect("../signupPage.jsp");
         return;
     }
     query.close();

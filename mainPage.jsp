@@ -35,85 +35,82 @@
 
     String id = (String)session.getAttribute("id");
     if(id == null){
-        out.print("<script>alert('로그인 해주세요.'); window.location.href='loginPage.jsp';</script>");
+        out.print("<script>alert('로그인 해주세요.');</script>");
+        response.sendRedirect("index.jsp");
         return;
     } 
 
     String phonenumber = (String)session.getAttribute("phonenumber");
     String name = (String)session.getAttribute("name");
-    String grade = (String)session.getAttribute("grade");
-    String team = (String)session.getAttribute("team");
-    String gradeKr ="팀원";
-    String teamKr ="";
-    if(grade.equals("leader")){
-        gradeKr = "팀장";
-    }
-    if(team.equals("develope")){
-        teamKr = "개발팀";
-    }
-    else if(team.equals("design")){
-        teamKr = "디자인팀";
-    }
+    int grade = session.getAttribute("grade");
+    int team = session.getAttribute("team");
+    String pageId = session.getAttribute("pageId");
+    int pageMonth = session.getAttribute("pageMonth");
+    int pageYear = session.getAttribute("pageYear");
+    String gradeName;
+    String teamDepartmentName;
 
     //일정수정권한부여
     Boolean grantWriteCheck = false;
-    String pageId = request.getParameter("idValue");
-    String pageName = request.getParameter("nameValue");
+
     if(pageId.equals(id)){
         grantWriteCheck = true;
     }
 
-    //스케줄표 전처리
+    
     Class.forName("com.mysql.jdbc.Driver");
-    LocalDate today = LocalDate.now();
-    int currentMonth = today.getMonthValue();
-    int currentYear = today.getYear();
-    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar", "juneh","2633");
-    String sql = "SELECT * FROM schedule WHERE id = ? ORDER BY schedule_date ASC";
-    PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, pageId);
-    ResultSet result = query.executeQuery();
-    TreeMap<String,ArrayList<Schedule>> scheduleTree = new TreeMap<>();
-    while(result.next()){
-        int deletedCheck = result.getInt(6);
-        if(deletedCheck == 1){
-            continue;
-        }
-        String scheduleDate = result.getString(3);
-        String[] parts = scheduleDate.split(" ");
-        String datePart = parts[0];
-        String timePart = parts[1]; 
-        String uidPart = (parts.length > 2) ? parts[2] : "";
-        String[] dateParts = parts[0].split("-");
-        int year = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int day = Integer.parseInt(dateParts[2]);
-        Schedule scheduleElement = new Schedule(timePart, result.getString(4), result.getInt(1));
-        if (scheduleTree.containsKey(datePart)) {
-            ArrayList<Schedule> getList = scheduleTree.get(datePart);
-            getList.add(scheduleElement);
-        } 
-        else {
-            ArrayList<Schedule> newList = new ArrayList<>();
-            newList.add(scheduleElement);
-            scheduleTree.put(datePart, newList);
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/calendar_fb", "juneh","2633");
+
+    //직급 이름 불러오기
+    String gradeSql = "SELECT *FROM grade WHERE grade_number = ?";
+    PreparedStatement gradeQuery = connect.prepareStatement(gradeSql);
+    gradeQuery.setInt(1,grade);
+    ResultSet gradeResult = gradeQuery.executeQuery();
+    if(gradeResult.next()){
+        gradeName=gradeResult.getString(2);
+    }
+    
+    //팀 이름 불러오기
+    String teamSql = "SELECT *FROM team WHERE team_number = ?";
+    PreparedStatement teamQuery = connect.prepareStatement(teamSql);
+    teamQuery.setInt(1,team);
+    ResultSet teamResult = teamQuery.executeQuery();
+    if(teamResult.next()){
+        teamDepartmentName=teamResult.getString(2);
+    }
+
+    //년,월의 일정 갯수 불러오기
+    ArrayList<Integer>countSchedule = new ArrayList<>();
+    for(int i=0 ; i<=31 ; i++ ){
+        String countSql = "SELECT COUNT(*) FROM schedule WHERE DATE_FORMAT(schedule_date, '%Y-%m-%d') = CONCAT(?, '-', ?, '-', ?)";
+        PreparedStatement countQuery = connect.prepareStatement(countSql);
+        countQuery.setInt(1, pageYear);
+        countQuery.setString(2, (pageMonth < 10 ? "0" : "" ) + pageMonth);
+        countQuery.setString(3, (i< 10 ? "0" : "") + i);
+        ResultSet countResult = countQuery.executeQuery();
+        if (countResult.next()) {
+            int count = countResult.getInt(1);
+            countSchedule.add(count);
         }
     }
-    query.close();
-    JSONObject scheduleTreeJson = new JSONObject(scheduleTree);
-    String scheduleTreeJsonString = scheduleTreeJson.toJSONString();
+
+    
+
+
+
     //
     ArrayList<String>teamId = new ArrayList<>();
     ArrayList<String>teamName = new ArrayList<>();
+
     //팀장만 목록 가져오기
-    if(grade.equals("leader")){
-        String teamSql = "SELECT * FROM user WHERE team = ? AND grade = 'member' AND user_deleted = 0 ORDER BY name ASC";
-        PreparedStatement teamQuery = connect.prepareStatement(teamSql);
-        teamQuery.setString(1, team);
-        ResultSet teamResult = teamQuery.executeQuery();
-        while(teamResult.next()){
-            teamId.add("'"+teamResult.getString(1)+"'");
-            teamName.add("'"+teamResult.getString(4)+"'");
+    if(grade==0){
+        String memberSql = "SELECT * FROM user WHERE team_number = ? AND grade_number = 1 AND user_deleted = 0 ORDER BY name ASC";
+        PreparedStatement memberQuery = connect.prepareStatement(memberSql);
+        memberQuery.setInt(1, team);
+        ResultSet memberResult = memberQuery.executeQuery();
+        while(memberResult.next()){
+            teamId.add("'"+memberResult.getString(1)+"'");
+            teamName.add("'"+memberResult.getString(4)+"'");
         }
         teamQuery.close();
     }
@@ -194,11 +191,11 @@
             </div>
             <div class="infoBox">
                 <div class="infoTextBox">직급</div>
-                <div class="infoOutputBox"><%=gradeKr%></div>
+                <div class="infoOutputBox"><%=gradeName%></div>
             </div>
             <div class="infoBox">
                 <div class="infoTextBox">부서</div>
-                <div class="infoOutputBox"><%=teamKr%></div>
+                <div class="infoOutputBox"><%=teamDepartmentName%></div>
             </div>
             <div class="infoBox">
                 <div class="infoTextBox">전화번호</div>
@@ -216,13 +213,6 @@
         </div>
     </nav>
     <div id="modalOverlay"></div>
-    <div id="modalPage">
-        <div class="modalHeader">
-            <input class="disappearButton" type="button" value="X" onclick="modalDisappearEvent()">
-            <div id="modalDate" class="modalDateBox"></div>
-        </div>
-
-    </div>
     <script src="JavaScript/makeCalendar.js"></script>
     <script src="JavaScript/nav.js"></script>
     <script src="JavaScript/modal.js"></script>

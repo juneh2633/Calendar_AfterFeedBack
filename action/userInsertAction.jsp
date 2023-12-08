@@ -18,12 +18,14 @@
     String pattern = "^[a-zA-Z0-9]{6,30}$";
     String numPattern = "^\\d{11}$";
     String namePattern = "^[가-힣a-zA-Z]{1,30}$";
+
     try{
         idValue = idValue.replaceAll("\\s", "");
         passwordValue = passwordValue.replaceAll("\\s", "");
         phonenumberValue = phonenumberValue.replaceAll("\\s", "");
         nameValue = nameValue.replaceAll("\\s", "");
-
+        
+        //정규표현식으로 간결화- (백엔드에서도 정규식 사용가능)
         if(!Pattern.matches(pattern,idValue)||!Pattern.matches(pattern, passwordValue)||!passwordValue.equals(passwordCheckValue)||!Pattern.matches(numPattern,phonenumberValue)||!Pattern.matches(namePattern, nameValue) ){
             response.sendRedirect("../signupPage.jsp");   
             return;    

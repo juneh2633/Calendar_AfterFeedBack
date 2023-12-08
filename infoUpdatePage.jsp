@@ -9,6 +9,7 @@
 <%
     String id = (String)session.getAttribute("id");
     if(id == null){
+        send.redirect
         out.print("<script>alert('로그인 해주세요.'); window.location.href='loginPage.jsp';</script>");
         return;
     } 
